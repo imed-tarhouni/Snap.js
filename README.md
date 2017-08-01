@@ -68,6 +68,7 @@ var snapper = new Snap({
 ## Settings and Defaults
 ```javascript
 settings = {
+    rootElement: null,
     element: null,
     dragger: null,
     disable: 'none',
@@ -85,7 +86,7 @@ settings = {
     minDragDistance: 5
 }
 ```
-
+* `element`: The element which contains the 'left' or 'right' tag css
 * `element`: The element which the user will be sliding side to side
 * `dragger`: The element which the user will be using to slide the target element side to side
 * `disable`: String, set to 'left' or 'right' to disable the respective side
