@@ -14,6 +14,7 @@
     'use strict';
     var Snap = Snap || function(userOpts) {
         var settings = {
+            root: null,
             element: null,
             dragger: null,
             disable: 'none',
@@ -186,8 +187,8 @@
                     clearInterval(cache.animatingInterval);
 
                     if(cache.easingTo===0){
-                        utils.klass.remove(doc.body, 'snapjs-right');
-                        utils.klass.remove(doc.body, 'snapjs-left');
+                        utils.klass.remove(settings.rootElement, 'snapjs-right');
+                        utils.klass.remove(settings.rootElement, 'snapjs-left');
                     }
 
                     utils.dispatchEvent('animated');
@@ -326,11 +327,11 @@
 
                         if(settings.addBodyClasses){
                             if((absoluteTranslation)>0){
-                                utils.klass.add(doc.body, 'snapjs-left');
-                                utils.klass.remove(doc.body, 'snapjs-right');
+                                utils.klass.add(settings.rootElement, 'snapjs-left');
+                                utils.klass.remove(settings.rootElement, 'snapjs-right');
                             } else if((absoluteTranslation)<0){
-                                utils.klass.add(doc.body, 'snapjs-right');
-                                utils.klass.remove(doc.body, 'snapjs-left');
+                                utils.klass.add(settings.rootElement, 'snapjs-right');
+                                utils.klass.remove(settings.rootElement, 'snapjs-left');
                             }
                         }
 
@@ -477,20 +478,20 @@
          */
         this.open = function(side) {
             utils.dispatchEvent('open');
-            utils.klass.remove(doc.body, 'snapjs-expand-left');
-            utils.klass.remove(doc.body, 'snapjs-expand-right');
+            utils.klass.remove(settings.rootElement, 'snapjs-expand-left');
+            utils.klass.remove(settings.rootElement, 'snapjs-expand-right');
 
             if (side === 'left') {
                 cache.simpleStates.opening = 'left';
                 cache.simpleStates.towards = 'right';
-                utils.klass.add(doc.body, 'snapjs-left');
-                utils.klass.remove(doc.body, 'snapjs-right');
+                utils.klass.add(settings.rootElement, 'snapjs-left');
+                utils.klass.remove(settings.rootElement, 'snapjs-right');
                 action.translate.easeTo(settings.maxPosition);
             } else if (side === 'right') {
                 cache.simpleStates.opening = 'right';
                 cache.simpleStates.towards = 'left';
-                utils.klass.remove(doc.body, 'snapjs-left');
-                utils.klass.add(doc.body, 'snapjs-right');
+                utils.klass.remove(settings.rootElement, 'snapjs-left');
+                utils.klass.add(settings.rootElement, 'snapjs-right');
                 action.translate.easeTo(settings.minPosition);
             }
         };
@@ -503,12 +504,12 @@
 
             if(side==='left'){
                 utils.dispatchEvent('expandLeft');
-                utils.klass.add(doc.body, 'snapjs-expand-left');
-                utils.klass.remove(doc.body, 'snapjs-expand-right');
+                utils.klass.add(settings.rootElement, 'snapjs-expand-left');
+                utils.klass.remove(settings.rootElement, 'snapjs-expand-right');
             } else {
                 utils.dispatchEvent('expandRight');
-                utils.klass.add(doc.body, 'snapjs-expand-right');
-                utils.klass.remove(doc.body, 'snapjs-expand-left');
+                utils.klass.add(settings.rootElement, 'snapjs-expand-right');
+                utils.klass.remove(settings.rootElement, 'snapjs-expand-left');
                 to *= -1;
             }
             action.translate.easeTo(to);
